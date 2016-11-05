@@ -36,22 +36,22 @@
     font-size: 1.4em;
 }
 .menu li a.search:before {
-    content: "\f002";
+    content: "\f130";
 }
 .menu li a.archive:before {
     content: "\f187";
 }
 .menu li a.pencil:before {
-    content: "\f040";
+    content: "\f0c0";
 }
 .menu li a.contact:before {
-    content: "\f003";
+    content: "\f03a";
 }
 .menu li a.about:before {
     content: "\f007";
 }
 .menu li a.home:before {
-    content: "\f015";
+    content: "\f03d";
 }
 .menu li a:hover{
     background: #17AA1C;
@@ -138,7 +138,7 @@
 
 
 .camera-container{
-    left: 46%;
+    left: 92%;
     position: fixed;
     top: 5%;
 }

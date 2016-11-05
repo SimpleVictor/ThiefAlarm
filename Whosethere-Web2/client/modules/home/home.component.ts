@@ -18,7 +18,7 @@ export class HomeComponent implements AfterViewInit {
 
 
     constructor(private bServer: BackEndServer) {
-
+77
         console.log(firebase);
 
         var clarifai = new Clarifai.App(
