@@ -14,36 +14,34 @@
 
         <div id="add-segment" class="ui raised segment">
 
-
-
             <img id="picture-holder" src="http://placehold.it/350x250"><br/>
 
             <input id="fileuip" type="file" />
+            <button id="takePictureButton" class="btn btn-info btn-md" (click)="takePicture()">Take Picture</button>
 
-            <div class="ui large buttons" style="margin-top: 20px;">
-                <button class="positive ui button">Friendly</button>
+            <div class="ui large buttons" style="margin-top: 54px;">
+                <button class="positive ui button" (click)="conditionButonClicked('safe')">Safe</button>
                 <div class="or"></div>
-                <button class="ui yellow button">Cautious</button>
+                <button class="ui yellow button" (click)="conditionButonClicked('cautious')">Cautious</button>
                 <div class="or"></div>
-                <button class="negative ui button">Danger</button>
+                <button class="negative ui button" (click)="conditionButonClicked('danger')">Danger</button>
             </div><br/>
             <div class="ui input" style="width:100%;margin-top: 20px;">
-                <input type="text" placeholder="Name">
+                <input type="text" (keyup)="onNameChange(nameValue)" placeholder="Name" #nameValue>
             </div><br/>
 
-            <button class="ui positive basic button" (click)="FileSubmit()" style="margin-top: 20px;width:100%">Submit</button>
+            <button class="ui positive button" (click)="submitButonClicked()" style="margin-top: 20px;width:100%">Submit</button>
 
         </div>
 
     </div>
 
     <div id="user-row" class="row" *ngIf="AllUsers">
-
         <div class="col-md-3" *ngFor="let user of AllUsers">
             <div class="ui special cards">
                 <div class="ui card">
 
-                <div class="ui red ribbon label myribbon">
+                <div class="ui blue ribbon label myribbon">
                     {{user.condition}}
                 </div>
                     <div class="blurring dimmable image">
@@ -64,9 +62,11 @@
                         </div>
                     </div>
                     <div class="extra content">
-                        <a>
-                            <i class="users icon"></i>
-                            {{user.condition}}
+                        <a (click)="editUser(user)" style="padding-right: 70px">
+                            Edit
+                        </a>
+                        <a (click)="deleteUser(user)">
+                            Delete
                         </a>
                     </div>
                 </div>
@@ -75,4 +75,20 @@
 
     </div>
 
+</div>
+
+
+
+<div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Set Condition
+    </div>
+    <div class="image content">
+        <div class="description">
+            <button (click)="setCurentEditUser('safe')" class="btn btn-success btn-block">Safe</button>
+            <button (click)="setCurentEditUser('cautious')" class="btn btn-warning btn-block">Cautious</button>
+            <button (click)="setCurentEditUser('danger')" class="btn btn-danger btn-block">Danger</button>
+        </div>
+    </div>
 </div>

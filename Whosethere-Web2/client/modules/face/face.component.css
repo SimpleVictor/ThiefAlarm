@@ -27,12 +27,16 @@
     font-size: 20px;
 }
 
-.ui.red.ribbon.label{
+.ribbon.label.myribbon{
     position: absolute;
     z-index: 2;
     width: 150px;
     top: 3%;
-    left: -4%;
+    left: -7%;
+    font-size: 18px;
+    letter-spacing: 3px;
+    font-weight: bolder;
+
 }
 
 #addButton{
@@ -40,11 +44,16 @@
 }
 
 #fileuip{
-    left: 33%;
-    top: 201px;
+    left: 18%;
+    top: 280px;
     position: absolute;
 }
 
+#takePictureButton{
+    left: 64%;
+    top: 274px;
+    position: absolute;
+}
 
 .title-area > hr{
     border-bottom: 3px solid green;

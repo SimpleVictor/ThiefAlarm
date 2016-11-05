@@ -15,13 +15,21 @@ declare var firebase;
 })
 export class FaceComponent implements OnInit, AfterViewInit {
     clarifai;
-    AllUsers;
 
     addButton;
     deleteButton;
     goBackButton;
 
     fileLink;
+
+    NewName;
+
+    currentEditName;
+    currentEditCondition;
+
+    newFile;
+
+    condition;
 
     AllUsers;
 
@@ -45,7 +53,6 @@ export class FaceComponent implements OnInit, AfterViewInit {
         //         // there was an error
         //     }
         // );
-
 
         // this.clarifai.inputs.create([
         //     {
@@ -120,12 +127,33 @@ export class FaceComponent implements OnInit, AfterViewInit {
 
         if(this.bserver.allUsers){
             this.AllUsers = this.bserver.allUsers;
+
+            setTimeout(() => {
+                let testElement = $(".myribbon");
+                console.log(testElement);
+                for (let i = 0; i < testElement.length; i++){
+                    if(this.AllUsers[i].condition === 'danger'){
+                        testElement[i].className = '';
+                        testElement[i].className = 'ui red ribbon label myribbon';
+                    };
+                    if(this.AllUsers[i].condition === 'safe'){
+                        testElement[i].className = '';
+                        testElement[i].className = 'ui green ribbon label myribbon';
+                    };
+                    if(this.AllUsers[i].condition === 'cautious'){
+                        testElement[i].className = '';
+                        testElement[i].className = 'ui yellow ribbon label myribbon';
+                    };
+                };
+
+            },500);
+
         }
 
     }
 
     ngAfterViewInit(){
-
+        let vr = this;
         var inputElement = document.getElementById("fileuip");
         function handleFiles(){
             var fileList = this.files; /* now you can work with the file list */
@@ -140,14 +168,17 @@ export class FaceComponent implements OnInit, AfterViewInit {
             };
 
             reader.readAsDataURL(fileList[0]);
+            console.log(fileList[0]);
             // var storageRef = firebase.storage().ref("test.jpg").put(fileList[0]).then(function(snapshot) {
             //     console.log(snapshot);
             //     console.log('Uploaded a blob or file!');
             // });
+            vr.newFile = fileList[0];
         }
         inputElement.addEventListener("change", handleFiles, false);
 
         let real = this.readURL;
+
 
 
     }
@@ -160,11 +191,11 @@ export class FaceComponent implements OnInit, AfterViewInit {
             let add_container = $("#add-container");
             let add_segment = $("#add-segment");
             this.goBackButton = $("#goBackButton");
-            this.goBackButton.css("opacity", 1);
+            // this.goBackButton.css("opacity", 1);
 
             TweenMax.to(add_container, 0.1, {opacity: 1 , ease:Circ.easeOut});
-            TweenMax.from(add_segment , 1, {scale: 0 , ease:Circ.easeOut});
-            TweenMax.from(this.goBackButton, 1, {scale: 0 , ease:Circ.easeOut});
+            TweenMax.to(add_segment , 1, {scale: 1 , ease:Circ.easeOut});
+            TweenMax.to(this.goBackButton, 1, {"opacity": 1,scale: 1, ease:Circ.easeOut});
         }
 
         this.addButton = $("#addButton");
@@ -177,8 +208,17 @@ export class FaceComponent implements OnInit, AfterViewInit {
     }
 
     GoBackButton(){
-        // TweenMax.to(this.addButton, 0.5, {scale: 1 , ease:Circ.easeOut});
-        // TweenMax.to(this.deleteButton, 0.5, {scale: 1 , ease:Circ.easeOut});
+        let add_segment = $("#add-segment");
+        let goBackButton = $("#goBackButton");
+        let user_box = $("#user-row");
+
+        TweenMax.to(add_segment, 0.5, {scale: 0 , ease:Circ.easeOut});
+        TweenMax.to(goBackButton, 0.5, {scale: 0 , ease:Circ.easeOut});
+
+        TweenMax.to(user_box, 0.5, {scale: 1 , ease:Circ.easeOut});
+
+        TweenMax.to(this.addButton, 0.5, {scale: 1 , ease:Circ.easeOut});
+        TweenMax.to(this.deleteButton, 0.5, {scale: 1 , ease:Circ.easeOut});
     }
 
     FileSubmit(){
@@ -227,6 +267,132 @@ export class FaceComponent implements OnInit, AfterViewInit {
 
             reader.readAsDataURL(input);
         }
+    }
+
+    onNameChange(val){
+        console.log(val.value);
+        this.NewName = val.value;
+
+    }
+
+    conditionButonClicked(buttonval){
+        console.log(buttonval);
+        this.condition = buttonval;
+    }
+
+    submitButonClicked(){
+
+        let userObj = {
+            name: this.NewName,
+            file: this.newFile,
+            condition: this.condition
+        };
+
+        console.log(this.newFile);
+
+        console.log(userObj);
+
+        let randomNum = Math.round(Math.random()*2000000000000)+ 1000;
+
+        var storageRef = firebase.storage().ref(`${randomNum}.jpg`).put(userObj.file).then((snapshot) => {
+            console.log("Sucess!!");
+            this.fileLink = snapshot.downloadURL;
+            console.log('Uploaded a blob or file!');
+
+            this.clarifai.inputs.create([
+                {
+                    url: `${this.fileLink}`,
+                    id: `${userObj.name}`,
+                    concepts: [
+                        {
+                            id: `${userObj.name}`,
+                            value: true
+                        }
+                    ]
+                }
+            ]).then(
+                (response) => {
+                    // do something with response
+                    console.log("sucess1");
+                    console.log(response);
+
+                    this.bserver.sendIndividualDataToFirebase(userObj).subscribe(
+                        (data) => {
+                            console.log("Finish uploading to database");
+                        }, (err) => {
+                            console.log("Someting went wrong");
+                        }
+                    )
+                },
+                (err) => {
+                    console.log(err);
+                    // there was an error
+                }
+            );
+
+        });
+
+
+    }
+
+
+    DeleteButtonClicked(){
+        this.clarifai.input.deletes(["Victor Le"]).then(
+            function(response) {
+                // do something with response
+                console.log("suces");
+                console.log(response);
+            },
+            function(err) {
+                console.log(err);
+                // there was an error
+            }
+        );
+    }
+
+
+    deleteUser(user){
+    console.log("Works");
+
+        $('.ui.modal')
+            .modal('show')
+        ;
+
+    }
+
+    editUser(user){
+    console.log(user);
+
+        this.currentEditName = user.name;
+        $('.ui.modal')
+            .modal('show')
+        ;
+    }
+
+    setCurentEditUser(condition){
+        this.currentEditCondition = condition;
+        $('.ui.modal')
+            .modal('hide')
+        ;
+
+
+        let newO = {
+            name: this.currentEditName,
+            condition: this.currentEditCondition
+        };
+
+        this.bserver.ChangeConditionFromUser(newO).subscribe(
+            (data) => {
+                console.log("Sucess Changing in databse");
+                console.log(data);
+                window.location.reload();
+            }, (err) => {
+                console.log(err);
+            }
+        )
+
+
+
     }
 
 

@@ -88,5 +88,31 @@ export class BackEndServer {
         );
     }
 
+    sendIndividualDataToFirebase(user){
+        let newObj = {
+            [user.name]: {
+                condition: user.condition
+            }
+        };
+            let body = JSON.stringify(newObj);
+            let headers = new Headers({ 'Content-Type': 'application/json' });
+            let options = new RequestOptions({ headers: headers });
+            return this.http_.patch(`https://faceproject-ef088.firebaseio.com/users/.json`, body, options).map((res: Response) => res.json());
+
+    }
+
+
+    ChangeConditionFromUser(user){
+        let newObj = {
+            [user.name]: {
+                condition: user.condition
+            }
+        };
+        let body = JSON.stringify(newObj);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http_.patch(`https://faceproject-ef088.firebaseio.com/users/.json`, body, options).map((res: Response) => res.json());
+    }
+
 
 }
