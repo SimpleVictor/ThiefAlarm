@@ -27,31 +27,24 @@
         </div>
 
 
-            <h4 class="ui horizontal divider header" style="position: absolute; top:-15%">
+            <h4 class="ui horizontal divider header" id="divider">
                 <i class="bar chart icon"></i>
                 Specifications
             </h4>
 
             <!--SWITCHES-->
-            <div id="switches" class="ui segments">
-                <div class="ui segment">
-                    <p>Top</p>
-                </div>
-                <div class="ui secondary segment">
-                    <p>Secondary Content</p>
-                </div>
-            </div>
 
-
-
-            <!--POSSIBLE GUSSSES-->
-            <div id="possible-guesses" class="ui card">
+            <div id="switches" class="ui card">
                 <div class="content">
                     <i class="right floated like icon"></i>
                     <i class="right floated star icon"></i>
-                    <div class="header">Possible Gusses</div>
+                    <div class="header"><div id="update-status" style="border-bottom: 2px solid black;">Status :</div></div>
                     <div class="description">
-                        <p>blahhh</p>
+                        <button (click)="TurnOnButton()" style="margin-top: 70px;" class="btn btn-success btn-block">Turn On</button>
+                        <button (click)="TurnOffButton()" class="btn btn-danger btn-block">Turn Off</button>
+                        <button (click)="TurnOnReset()" class="btn btn-warning btn-block">Reset Predictions</button>
+
+
                     </div>
                 </div>
                 <div class="extra content">
@@ -66,6 +59,97 @@
                 </div>
             </div>
 
+
+            <!--<div id="switches" class="ui segments">-->
+                <!--<div class="ui segment">-->
+                    <!--<p>Status : <span style="color: #17AA1C;font-weight: bolder">ON</span></p>-->
+                <!--</div>-->
+                <!--<div class="ui segment">-->
+
+                    <!--<button style="margin-top: 70px;" class="btn btn-success btn-block">Turn On</button>-->
+                    <!--<button class="btn btn-danger btn-block">Turn Off</button>-->
+                    <!--<button class="btn btn-warning btn-block">Reset Predictions</button>-->
+
+                <!--</div>-->
+            <!--</div>-->
+
+
+
+            <!--POSSIBLE GUSSSES-->
+            <div id="possible-guesses" class="ui card">
+                <div class="content">
+                    <i class="right floated user icon"></i>
+                    <div class="header" style="border-bottom: 2px solid black;text-align: center">Possible Gusses</div>
+                    <div class="description">
+                        <div *ngIf="predictingMode" class="ui active dimmer">
+                            <div  class="ui massive text loader">Predicting...</div>
+                        </div>
+
+                        <div *ngIf="mainPredict">
+                            <h1 style="text-align: center">{{mainPredict.name}}</h1>
+                            <img src="{{mainPredict.picture}}" style="width:250px;height:250px">
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="extra content">
+    <span class="left floated like">
+      <i class="like icon"></i>
+      Like
+    </span>
+                    <span class="right floated star">
+      <i class="star icon"></i>
+      Favorite
+    </span>
+                </div>
+            </div>
+
+
+
+            <div class="ui tablet stackable steps" id="steps-stack">
+                <div class="active step" style="border-top: 3px solid green">
+                    <i class="camera icon"></i>
+                    <i class="check circle outline icon"></i>
+                    <div class="content">
+                        <div class="title">Pictures</div>
+                        <div class="description">Grab 6 webcam shots</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <i class="database icon"></i>
+                    <i class="check circle outline"></i>
+                    <div class="content">
+                        <div class="title">Firebase</div>
+                        <div class="description">Adding content into database</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <i class="student icon"></i>
+                    <i class="check circle outline"></i>
+                    <div class="content">
+                        <div class="title">Clarifai Trainning</div>
+                        <div class="description">Enter billing information</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <i class="calculator icon"></i>
+                    <i class="check circle outline"></i>
+                    <div class="content">
+                        <div class="title">Clarifai Prediction</div>
+                        <div class="description">Enter billing information</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <i class="shipping icon"></i>
+                    <i class="check circle outline"></i>
+                    <i class="check circle outline"></i>
+                    <div class="content">
+                        <div class="title">Prediction Delivered</div>
+                        <div class="description">Verify order details</div>
+                    </div>
+                </div>
+            </div>
 
 
 

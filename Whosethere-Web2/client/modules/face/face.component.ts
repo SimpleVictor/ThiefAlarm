@@ -44,68 +44,76 @@ export class FaceComponent implements OnInit, AfterViewInit {
         // );
 
 
-        this.clarifai.inputs.create([
-            {
-                url: "https://randomuser.me/api/portraits/men/53.jpg",
-                id: 'John Smith',
-                concepts: [
-                    {
-                        id: "John Smith",
-                        value: true
-                    }
-                ]
-            },
-            {
-                url: "https://randomuser.me/api/portraits/men/40.jpg",
-                id: 'Eric Hernandez',
-                concepts: [
-                    {
-                        id: "Eric Hernandez",
-                        value: true
-                    }
-                ]
-            },
-            {
-                url: "https://randomuser.me/api/portraits/men/95.jpg",
-                id: 'Jason Lai',
-                concepts: [
-                    {
-                        id: "Jason Lai",
-                        value: true
-                    }
-                ]
-            },
-            {
-                url: "https://randomuser.me/api/portraits/men/13.jpg",
-                id: 'Johnny Tran',
-                concepts: [
-                    {
-                        id: "Johnny Tran",
-                        value: true
-                    }
-                ]
-            },
-            {
-                url: "https://randomuser.me/api/portraits/men/70.jpg",
-                id: 'Henry Smith',
-                concepts: [
-                    {
-                        id: "Henry Smith",
-                        value: true
-                    }
-                ]
-            },
-        ]).then(
-            function(response) {
-                // do something with response
-                console.log("sucess1");
-                console.log(response);
-            },
-            function(err) {
-                console.log(err);
-                // there was an error
-            }
-        );
+        // this.clarifai.inputs.create([
+        //     {
+        //         url: "https://randomuser.me/api/portraits/men/53.jpg",
+        //         id: 'John Smith',
+        //         concepts: [
+        //             {
+        //                 id: "John Smith",
+        //                 value: true
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         url: "https://randomuser.me/api/portraits/men/40.jpg",
+        //         id: 'Eric Hernandez',
+        //         concepts: [
+        //             {
+        //                 id: "Eric Hernandez",
+        //                 value: true
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         url: "https://randomuser.me/api/portraits/men/95.jpg",
+        //         id: 'Jason Lai',
+        //         concepts: [
+        //             {
+        //                 id: "Jason Lai",
+        //                 value: true
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         url: "https://randomuser.me/api/portraits/men/13.jpg",
+        //         id: 'Johnny Tran',
+        //         concepts: [
+        //             {
+        //                 id: "Johnny Tran",
+        //                 value: true
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         url: "https://randomuser.me/api/portraits/men/70.jpg",
+        //         id: 'Henry Smith',
+        //         concepts: [
+        //             {
+        //                 id: "Henry Smith",
+        //                 value: true
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         url: 'https://firebasestorage.googleapis.com/v0/b/faceproject-ef088.appspot.com/o/br.jpg?alt=media&token=f05d55b0-720b-427e-9c1f-c62d5961f2dd',
+        //         id: 'Victor Le',
+        //         concepts: [{
+        //             id: 'Victor Le',
+        //             value: true
+        //         }]
+        //     }
+        // ]).then(
+        //     function(response) {
+        //         // do something with response
+        //         console.log("sucess1");
+        //         console.log(response);
+        //     },
+        //     function(err) {
+        //         console.log(err);
+        //         // there was an error
+        //     }
+        // );
 
     }
 

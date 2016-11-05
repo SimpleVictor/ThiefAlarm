@@ -1,4 +1,4 @@
-import {Component, AfterViewInit} from "@angular/core";
+import {Component, AfterViewInit, OnDestroy} from "@angular/core";
 import {BackEndServer} from "../../providers/server.provider";
 
 declare var tracking;
@@ -15,7 +15,7 @@ declare var $;
     styleUrls: [`client/modules/home/home-css/home.firstpage.css`],
     templateUrl: `client/modules/home/home.component.html`
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements AfterViewInit, OnDestroy {
 
     clarifai;
     sixPictureURL = {
@@ -27,36 +27,59 @@ export class HomeComponent implements AfterViewInit {
         6: ""
     };
 
+    statusQUO = "Not yet started";
+
+    predictingMode: boolean = false;
+
+    allUsers:any = {};
+    userAmount;
+
+    predictResult;
+
+    tracker;
+    trackerTask;
+
+    statusContainer;
+
+    mainPredict;
+
     constructor(private bServer: BackEndServer) {
-        console.log(firebase);
 
         this.clarifai = new Clarifai.App(
             'bTMzaZJMhkuBrrwqrtPceNg3c_vNMtMkE8CGHlOp',
             'sqFkvLgm8CcFQ7OMYnPv2vwryzoHkkIpSSfwOHlF'
         );
 
-        // this.clarifai.inputs.list().then(
-        //     function(response) {
-        //         // do something with response
-        //         console.log("hjere");
-        //         console.log(response);
-        //     },
-        //     function(err) {
-        //         console.log(err);
-        //         // there was an error
-        //     }
-        // );
-
-        this.clarifai.inputs.delete('ea5df8dcde6a42678e1ebf8cc889714c').then(
-            function(response) {
+        this.clarifai.inputs.list().then(
+            (response) => {
                 // do something with response
-                console.log("good");
+                console.log("hjere");
+                console.log(response);
+                this.userAmount = response.length;
+                for(let i = 0; i < response.length; i++){
+                    this.allUsers[response[i].id] = {imgUrl:response[i].imageUrl};
+                }
+
             },
             function(err) {
-                console.log("bruh");
+                console.log(err);
                 // there was an error
             }
         );
+
+
+
+
+        // this.clarifai.inputs.delete('ea5df8dcde6a42678e1ebf8cc889714c').then(
+        //     function(response) {
+        //         // do something with response
+        //         console.log("good");
+        //     },
+        //     function(err) {
+        //         console.log("bruh");
+        //         // there was an error
+        //     }
+        // );
 
 
         // this.clarifai.inputs.search([
@@ -81,7 +104,6 @@ export class HomeComponent implements AfterViewInit {
 
         this.bServer.sendBlob(obj).subscribe(
             (data) => {
-                console.log("sucess!!");
                 console.log(data);
             }, (err) => {
                 console.log("err");
@@ -91,6 +113,8 @@ export class HomeComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(){
+
+        this.statusContainer = document.getElementById("update-status");
         // Webcam.set({
         //     width: 640,
         //     height: 480
@@ -99,16 +123,22 @@ export class HomeComponent implements AfterViewInit {
         var video = document.getElementById('video');
         var canvas = document.getElementById('canvas');
         var context = canvas.getContext('2d');
-        var tracker = new tracking.ObjectTracker(['face']);
-        tracker.setInitialScale(4);
-        tracker.setStepSize(2);
-        tracker.setEdgesDensity(0.1);
+        this.tracker = new tracking.ObjectTracker(['face']);
+        this.tracker.setInitialScale(4);
+        this.tracker.setStepSize(2);
+        this.tracker.setEdgesDensity(0.1);
 
-        tracking.track('#video', tracker, { camera: true });
+        this.trackerTask = tracking.track('#video', this.tracker, { camera: true });
+        // this.trackerTask = tracking.track('#video', this.tracker);
 
+        console.log(this.tracker);
         let counter = 1;
 
-        tracker.on('track', (event) => {
+        this.statusContainer.innerHTML = "";
+        this.statusContainer.innerHTML = `Status : <span style="color: #17AA1C;font-weight: bolder">ON</span>`;
+
+
+        this.tracker.on('track', (event) => {
             context.clearRect(0, 0, canvas.width, canvas.height);
                 event.data.forEach((rect) => {
                     if(counter < 7){
@@ -139,11 +169,19 @@ export class HomeComponent implements AfterViewInit {
         //     rect.style.top = (video.offsetTop + y) + 'px';
         // };
 
-        var gui = new dat.GUI();
-        gui.add(tracker, 'edgesDensity', 0.1, 0.5).step(0.01);
-        gui.add(tracker, 'initialScale', 1.0, 10.0).step(0.1);
-        gui.add(tracker, 'stepSize', 1, 5).step(0.1);
+        // var gui = new dat.GUI();
+        // gui.add(tracker, 'edgesDensity', 0.1, 0.5).step(0.01);
+        // gui.add(tracker, 'initialScale', 1.0, 10.0).step(0.1);
+        // gui.add(tracker, 'stepSize', 1, 5).step(0.1);
 
+    }
+
+
+    ngOnDestroy(){
+        console.log(this.trackerTask);
+        // var trackerTask = tracking.track('#video', this.tracker);
+        this.trackerTask.stop(); // Stops the tracking
+        // console.log(trackerTask);
     }
 
     snapPicture(val){
@@ -160,11 +198,12 @@ export class HomeComponent implements AfterViewInit {
 
     sendDataToFirebase(val, dataURI){
         let blob = this.blobFirebase(dataURI);
-        var storageRef = firebase.storage().ref(`checker${val}.jpg`).put(blob).then((snapshot) => {
+        var storageRef = firebase.storage().ref(`multiplefiles/checker${val}.jpg`).put(blob).then((snapshot) => {
             // console.log(snapshot);
             this.sixPictureURL[val] = snapshot.downloadURL;
             console.log(`Uploaded a blob or file!: ${val}`);
             if(val === 6){
+                this.predictingMode = true;
                 this.SendToClarifai(this.sixPictureURL);
             };
         });
@@ -172,13 +211,27 @@ export class HomeComponent implements AfterViewInit {
     }
 
     SendToClarifai(URLS){
-        this.clarifai.models.predict("ee247b52f2bb46a2bbdb0b60c8468d15", [URLS[1],URLS[2],URLS[3],URLS[4],URLS[5],URLS[6]]).then(
-            function(response) {
+        this.clarifai.models.predict("bc679e67213e4a0c8fdbdbebdcea6a0e", URLS[1]).then(
+            (response) => {
                 // do something with response
-                console.log("sucess!");
                 console.log(response);
 
-                response.data.outputs[0].data.concepts;
+                this.predictResult = response.data.outputs[0].data.concepts;
+
+                for(let i = 0; i < this.predictResult.length; i++){
+                    if(i === 0){
+                        let obj = {
+                            name: this.predictResult[i].id,
+                            picture: this.allUsers[this.predictResult[i].id].imgUrl
+                        };
+
+                        this.mainPredict = obj;
+                    }
+                    this.allUsers[this.predictResult[i].id].percent = this.predictResult[i].value;
+                }
+
+                this.predictingMode = false;
+                console.log(this.mainPredict);
 
             },
             function(err) {
@@ -236,6 +289,44 @@ export class HomeComponent implements AfterViewInit {
     }
 
 
+    TurnOnReset(){
+
+    }
+
+    TurnOnButton(){
+        console.log("Running ON");
+        this.statusContainer.innerHTML = "";
+        this.statusContainer.innerHTML = `Status : <span style="color: #17AA1C;font-weight: bolder">ON</span>`;
+        this.trackerTask.run();
+    }
+
+    TurnOffButton(){
+        console.log("Running OFF");
+        this.statusContainer.innerHTML= ``;
+        this.statusContainer.innerHTML= `Status : <span style="color: RED;font-weight: bolder">OFF</span>`;
+        this.trackerTask.stop();
+    }
+
+
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
