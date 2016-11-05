@@ -57,7 +57,6 @@ export class HomeComponent implements AfterViewInit {
             }
         );
 
-        console.log(clarifai);
     }
 
 

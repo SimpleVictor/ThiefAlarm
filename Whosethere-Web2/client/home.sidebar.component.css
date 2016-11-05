@@ -1,5 +1,6 @@
 @import url("//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css");
 .menu {
+    z-index: 5;
     position: fixed;
     top: 0;
     box-shadow: 10px 10px 5px -6px rgba(23,170,28,1);
