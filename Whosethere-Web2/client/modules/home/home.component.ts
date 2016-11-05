@@ -53,7 +53,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
         this.clarifai.inputs.list().then(
             (response) => {
                 // do something with response
-                console.log("hjere");
                 console.log(response);
                 this.userAmount = response.length;
                 for(let i = 0; i < response.length; i++){
@@ -110,6 +109,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
             }
         );
 
+
     }
 
     ngAfterViewInit(){
@@ -155,6 +155,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
                 });
         });
 
+
+        let randomBox = $("#stats");
+        randomBox.remove();
 
         // var trackerTask = tracking.track('#video', tracker);
         // trackerTask.stop();
@@ -215,9 +218,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
             (response) => {
                 // do something with response
                 console.log(response);
-
                 this.predictResult = response.data.outputs[0].data.concepts;
-
                 for(let i = 0; i < this.predictResult.length; i++){
                     if(i === 0){
                         let obj = {
@@ -307,6 +308,16 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
         this.trackerTask.stop();
     }
 
+
+    SendText(){
+
+    }
+
+    SoundAlarm(){
+        $('.bidbye').css("display","block");
+        var aud = document.getElementById('audio');
+        aud.play();
+    }
 
 
 

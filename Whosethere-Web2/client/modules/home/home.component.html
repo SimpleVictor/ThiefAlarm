@@ -1,3 +1,9 @@
+<audio id='audio' src="http://soundbible.com/mp3/Siren_Noise-KevanGC-1337458893.mp3" loop></audio>
+
+<div class='bidbye'>
+    GOT YA'
+</div>
+
 <div class="main-container">
 
 
@@ -28,8 +34,8 @@
 
 
             <h4 class="ui horizontal divider header" id="divider">
-                <i class="bar chart icon"></i>
-                Specifications
+                <i class="record icon"></i>
+                Video
             </h4>
 
             <!--SWITCHES-->
@@ -43,6 +49,8 @@
                         <button (click)="TurnOnButton()" style="margin-top: 70px;" class="btn btn-success btn-block">Turn On</button>
                         <button (click)="TurnOffButton()" class="btn btn-danger btn-block">Turn Off</button>
                         <button (click)="TurnOnReset()" class="btn btn-warning btn-block">Reset Predictions</button>
+                        <button (click)="SoundAlarm()" class="btn btn-danger btn-block">Sound Alarm</button>
+                        <button (click)="SendText()" class="btn btn-info btn-block">Send Text</button>
 
 
                     </div>
@@ -129,7 +137,7 @@
                     <i class="check circle outline"></i>
                     <div class="content">
                         <div class="title">Clarifai Trainning</div>
-                        <div class="description">Enter billing information</div>
+                        <div class="description">We are now training the content</div>
                     </div>
                 </div>
                 <div class="step">
@@ -137,7 +145,7 @@
                     <i class="check circle outline"></i>
                     <div class="content">
                         <div class="title">Clarifai Prediction</div>
-                        <div class="description">Enter billing information</div>
+                        <div class="description">Choosing the most similar</div>
                     </div>
                 </div>
                 <div class="step">
@@ -146,7 +154,7 @@
                     <i class="check circle outline"></i>
                     <div class="content">
                         <div class="title">Prediction Delivered</div>
-                        <div class="description">Verify order details</div>
+                        <div class="description">We have found your match</div>
                     </div>
                 </div>
             </div>
