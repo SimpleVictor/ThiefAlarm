@@ -10,6 +10,10 @@ declare var Clarifai;
 declare var firebase;
 declare var $;
 
+declare var TweenMax;
+declare var Bounce;
+declare var Circ;
+
 @Component({
     selector: "home",
     styleUrls: [`client/modules/home/home-css/home.firstpage.css`],
@@ -17,6 +21,7 @@ declare var $;
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
 
+    aud;
     clarifai;
     sixPictureURL = {
         1: "",
@@ -40,6 +45,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     trackerTask;
 
     statusContainer;
+
+    currentActiveStep = "1";
 
     mainPredict;
 
@@ -65,6 +72,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
                 // there was an error
             }
         );
+
 
 
 
@@ -146,7 +154,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
                         counter++;
                     }
 
-                    context.strokeStyle = '#a64ceb';
+                    // context.strokeStyle = '#a64ceb';
+                    context.strokeStyle = '#17AA1C';
                     context.strokeRect(rect.x, rect.y, rect.width, rect.height);
                     context.font = '11px Helvetica';
                     context.fillStyle = "#fff";
@@ -206,6 +215,18 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
             this.sixPictureURL[val] = snapshot.downloadURL;
             console.log(`Uploaded a blob or file!: ${val}`);
             if(val === 6){
+                let icon1 = $("#icon1");
+                let stepactive1 = $("#active-step1");
+
+
+                stepactive1.css("border-top", "3px solid green");
+                stepactive1[0].className = '';
+                stepactive1[0].className = 'step';
+
+                icon1[0].className = '';
+                icon1.css("color", '#17AA1C');
+                icon1[0].className = 'check circle outline icon';
+
                 this.predictingMode = true;
                 this.SendToClarifai(this.sixPictureURL);
             };
@@ -214,6 +235,37 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     }
 
     SendToClarifai(URLS){
+
+
+
+        setTimeout(() => {
+            let icon1 = $("#icon2");
+            let stepactive1 = $("#active-step2");
+            stepactive1.css("border-top", "3px solid green");
+            stepactive1[0].className = '';
+            stepactive1[0].className = 'step';
+
+            icon1[0].className = '';
+            icon1.css("color", '#17AA1C');
+            icon1[0].className = 'check circle outline icon';
+        }, 300);
+
+
+        setTimeout(() => {
+
+        let icon1 = $("#icon3");
+        let stepactive1 = $("#active-step3");
+        stepactive1.css("border-top", "3px solid green");
+        stepactive1[0].className = '';
+        stepactive1[0].className = 'step';
+
+        icon1[0].className = '';
+        icon1.css("color", '#17AA1C');
+        icon1[0].className = 'check circle outline icon';
+
+        }, 700);
+
+
         this.clarifai.models.predict("bc679e67213e4a0c8fdbdbebdcea6a0e", URLS[1]).then(
             (response) => {
                 // do something with response
@@ -226,13 +278,58 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
                             picture: this.allUsers[this.predictResult[i].id].imgUrl
                         };
 
+                            let icon1 = $("#icon4");
+                            let stepactive1 = $("#active-step4");
+                            stepactive1.css("border-top", "3px solid green");
+                            stepactive1[0].className = '';
+                            stepactive1[0].className = 'step';
+
+                            icon1[0].className = '';
+                            icon1.css("color", '#17AA1C');
+                            icon1[0].className = 'check circle outline icon';
+
                         this.mainPredict = obj;
                     }
                     this.allUsers[this.predictResult[i].id].percent = this.predictResult[i].value;
                 }
 
+
+                let icon1 = $("#icon5");
+                let stepactive1 = $("#active-step5");
+                stepactive1.css("border-top", "3px solid green");
+                stepactive1[0].className = '';
+                stepactive1[0].className = 'step';
+
+                icon1[0].className = '';
+                icon1.css("color", '#17AA1C');
+                icon1[0].className = 'check circle outline icon';
+
+
                 this.predictingMode = false;
+                this.SuccessAlarm();
                 console.log(this.mainPredict);
+
+                // if(this.mainPredict.name )
+
+                console.log(this.bServer.allUsers[this.mainPredict.name]);
+
+                for(let i = 0; i < this.bServer.allUsers.length; i++){
+                    if(this.bServer.allUsers[i].name === this.mainPredict.name && this.bServer.allUsers[i].condition === "danger"){
+                        console.log("DANGER ALERT");
+                        this.SoundAlarm();
+                    }
+
+                    if(this.bServer.allUsers[i].name === this.mainPredict.name && this.bServer.allUsers[i].condition === "safe"){
+                        console.log("SAFE ALERT");
+                    }
+
+                    if(this.bServer.allUsers[i].name === this.mainPredict.name && this.bServer.allUsers[i].condition === "cautious"){
+                        console.log("CAUTIOUS ALERT");
+                    }
+
+
+                }
+
 
             },
             function(err) {
@@ -315,9 +412,24 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
     SoundAlarm(){
         $('.bidbye').css("display","block");
-        var aud = document.getElementById('audio');
-        aud.play();
+        this.aud = document.getElementById('audio');
+        console.log($("#audio"));
+        this.aud.play();
     }
+
+    StopAlarm(){
+        $('.bidbye').css("display","");
+        this.aud.pause();
+    }
+
+
+    SuccessAlarm(){
+        let successAud = document.getElementById('success');
+        successAud.play();
+    }
+
+
+
 
 
 

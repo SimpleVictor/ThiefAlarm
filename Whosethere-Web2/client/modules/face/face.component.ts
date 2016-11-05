@@ -1,4 +1,5 @@
 import { Component, OnInit , AfterViewInit} from '@angular/core';
+import {BackEndServer} from "../../providers/server.provider";
 
 declare var Clarifai;
 declare var $;
@@ -22,7 +23,9 @@ export class FaceComponent implements OnInit, AfterViewInit {
 
     fileLink;
 
-    constructor() {
+    AllUsers;
+
+    constructor(private bserver: BackEndServer) {
 
         this.clarifai = new Clarifai.App(
             'bTMzaZJMhkuBrrwqrtPceNg3c_vNMtMkE8CGHlOp',
@@ -114,6 +117,10 @@ export class FaceComponent implements OnInit, AfterViewInit {
         //         // there was an error
         //     }
         // );
+
+        if(this.bserver.allUsers){
+            this.AllUsers = this.bserver.allUsers;
+        }
 
     }
 

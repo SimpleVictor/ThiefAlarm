@@ -37,100 +37,15 @@
 
     </div>
 
-    <div id="user-row" class="row">
-        <div class="col-md-3">
-        <div class="ui special cards">
-            <div class="card">
-                <div class="blurring dimmable image">
-                    <div class="ui dimmer">
-                        <div class="content">
-                            <div class="center">
-                                <div class="ui inverted button">Add Friend</div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="http://semantic-ui.com/images/avatar2/large/elyse.png">
-                </div>
-                <div class="content">
-                    <a class="header">Team Fu</a>
-                    <div class="meta">
-                        <span class="date">Create in Sep 2014</span>
-                    </div>
-                </div>
-                <div class="extra content">
-                    <a>
-                        <i class="users icon"></i>
-                        2 Members
-                    </a>
-                </div>
-            </div>
-            </div>
-        </div>
+    <div id="user-row" class="row" *ngIf="AllUsers">
 
-
-        <div class="col-md-3">
+        <div class="col-md-3" *ngFor="let user of AllUsers">
             <div class="ui special cards">
-            <div class="card">
-                <div class="blurring dimmable image">
-                    <div class="ui dimmer">
-                        <div class="content">
-                            <div class="center">
-                                <div class="ui inverted button">Add Friend</div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="http://semantic-ui.com/images/avatar2/large/elyse.png">
-                </div>
-                <div class="content">
-                    <a class="header">Team Fu</a>
-                    <div class="meta">
-                        <span class="date">Create in Sep 2014</span>
-                    </div>
-                </div>
-                <div class="extra content">
-                    <a>
-                        <i class="users icon"></i>
-                        2 Members
-                    </a>
-                </div>
-            </div>
-                </div>
-        </div>
+                <div class="ui card">
 
-
-        <div class="col-md-3">
-            <div class="ui special cards">
-            <div class="card">
-                <div class="blurring dimmable image">
-                    <div class="ui dimmer">
-                        <div class="content">
-                            <div class="center">
-                                <div class="ui inverted button">Add Friend</div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="http://semantic-ui.com/images/avatar2/large/elyse.png">
+                <div class="ui red ribbon label myribbon">
+                    {{user.condition}}
                 </div>
-                <div class="content">
-                    <a class="header">Team Fu</a>
-                    <div class="meta">
-                        <span class="date">Create in Sep 2014</span>
-                    </div>
-                </div>
-                <div class="extra content">
-                    <a>
-                        <i class="users icon"></i>
-                        2 Members
-                    </a>
-                </div>
-            </div>
-        </div>
-            </div>
-
-
-        <div class="col-md-3">
-            <div class="ui special cards">
-                <div class="card">
                     <div class="blurring dimmable image">
                         <div class="ui dimmer">
                             <div class="content">
@@ -139,10 +54,11 @@
                                 </div>
                             </div>
                         </div>
-                        <img src="http://semantic-ui.com/images/avatar2/large/elyse.png">
+                        <!--<img src="http://semantic-ui.com/images/avatar2/large/elyse.png">-->
+                        <img src="{{user.picture}}" style="width: 290px;height:290px">
                     </div>
                     <div class="content">
-                        <a class="header">Team Fu</a>
+                        <a class="header">{{user.name}}</a>
                         <div class="meta">
                             <span class="date">Create in Sep 2014</span>
                         </div>
@@ -150,36 +66,7 @@
                     <div class="extra content">
                         <a>
                             <i class="users icon"></i>
-                            2 Members
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="ui special cards">
-                <div class="card">
-                    <div class="blurring dimmable image">
-                        <div class="ui dimmer">
-                            <div class="content">
-                                <div class="center">
-                                    <div class="ui inverted button">Add Friend</div>
-                                </div>
-                            </div>
-                        </div>
-                        <img src="http://semantic-ui.com/images/avatar2/large/elyse.png">
-                    </div>
-                    <div class="content">
-                        <a class="header">Team Fu</a>
-                        <div class="meta">
-                            <span class="date">Create in Sep 2014</span>
-                        </div>
-                    </div>
-                    <div class="extra content">
-                        <a>
-                            <i class="users icon"></i>
-                            2 Members
+                            {{user.condition}}
                         </a>
                     </div>
                 </div>

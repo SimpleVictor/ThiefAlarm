@@ -18,10 +18,14 @@
     font-size: 26px;
 }
 
+.step{
+    box-shadow: 1px 7px 25px 0px rgba(0,0,0,1) !important;
+}
+
 #steps-stack{
     top: 81px;
     position: relative;
-    width: 1200px;
+    width: 1350px;
     left: -370px;
 }
 .ghost-img{

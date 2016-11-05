@@ -16,20 +16,21 @@ loginRouter.get("/", function (request: Request, response: Response, next: NextF
 
     console.log(request.body);
 
-    client.messages.create({
-        body: "THERE'S AN UNWANTED GUEST AT YOUR DOOR",
-        to: "+19089308704",
-        from: "+19083602048"
-    }, function(err, data){
-        if(err){
-            console.log(err);
-            console.log("Could not send the message for some reason");
-            response.json("done!")
-        }else{
-            console.log("Has been contacted");
-            response.json("done!")
-        };
-    });
+    // client.messages.create({
+    //     body: "THERE'S AN UNWANTED GUEST AT YOUR DOOR",
+    //     to: "+19089308704",
+    //     from: "+19083602048"
+    // }, function(err, data){
+    //     if(err){
+    //         console.log(err);
+    //         console.log("Could not send the message for some reason");
+    //         response.json("done!")
+    //     }else{
+    //         console.log("Has been contacted");
+    //         response.json("done!")
+    //     };
+    // });
+    response.json("done!")
 
 });
 

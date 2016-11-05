@@ -1,7 +1,9 @@
 <audio id='audio' src="http://soundbible.com/mp3/Siren_Noise-KevanGC-1337458893.mp3" loop></audio>
+<audio id='success' src="assets/sounds/success.mp3"></audio>
 
 <div class='bidbye'>
     GOT YA'
+    <button (click)="StopAlarm()" class="btn btn-info">Stop Alarm</button>
 </div>
 
 <div class="main-container">
@@ -46,10 +48,12 @@
                     <i class="right floated star icon"></i>
                     <div class="header"><div id="update-status" style="border-bottom: 2px solid black;">Status :</div></div>
                     <div class="description">
-                        <button (click)="TurnOnButton()" style="margin-top: 70px;" class="btn btn-success btn-block">Turn On</button>
+                        <button (click)="TurnOnButton()" class="btn btn-success btn-block">Turn On</button>
                         <button (click)="TurnOffButton()" class="btn btn-danger btn-block">Turn Off</button>
                         <button (click)="TurnOnReset()" class="btn btn-warning btn-block">Reset Predictions</button>
                         <button (click)="SoundAlarm()" class="btn btn-danger btn-block">Sound Alarm</button>
+                        <button (click)="StopAlarm()" class="btn btn-warning btn-block">Stop Alarm</button>
+                        <button (click)="SuccessAlarm()" class="btn btn-success btn-block">Success Alarm</button>
                         <button (click)="SendText()" class="btn btn-info btn-block">Send Text</button>
 
 
@@ -114,44 +118,39 @@
             </div>
 
 
+            <!--<i style="color: #17AA1C" class="check circle outline icon"></i>-->
 
             <div class="ui tablet stackable steps" id="steps-stack">
-                <div class="active step" style="border-top: 3px solid green">
-                    <i class="camera icon"></i>
-                    <i class="check circle outline icon"></i>
+                <div id="active-step1" class="active step">
+                    <i id="icon1" class="camera icon"></i>
                     <div class="content">
                         <div class="title">Pictures</div>
                         <div class="description">Grab 6 webcam shots</div>
                     </div>
                 </div>
-                <div class="step">
-                    <i class="database icon"></i>
-                    <i class="check circle outline"></i>
+                <div id="active-step2" class="step">
+                    <i id="icon2" class="database icon"></i>
                     <div class="content">
                         <div class="title">Firebase</div>
                         <div class="description">Adding content into database</div>
                     </div>
                 </div>
-                <div class="step">
-                    <i class="student icon"></i>
-                    <i class="check circle outline"></i>
+                <div id="active-step3" class="step">
+                    <i id="icon3" class="student icon"></i>
                     <div class="content">
                         <div class="title">Clarifai Trainning</div>
                         <div class="description">We are now training the content</div>
                     </div>
                 </div>
-                <div class="step">
-                    <i class="calculator icon"></i>
-                    <i class="check circle outline"></i>
+                <div id="active-step4" class="step">
+                    <i id="icon4" class="calculator icon"></i>
                     <div class="content">
                         <div class="title">Clarifai Prediction</div>
                         <div class="description">Choosing the most similar</div>
                     </div>
                 </div>
-                <div class="step">
-                    <i class="shipping icon"></i>
-                    <i class="check circle outline"></i>
-                    <i class="check circle outline"></i>
+                <div id="active-step5" class="step">
+                    <i id="icon5" class="shipping icon"></i>
                     <div class="content">
                         <div class="title">Prediction Delivered</div>
                         <div class="description">We have found your match</div>
