@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 declare var Clarifai;
 
@@ -6,7 +6,7 @@ declare var Clarifai;
     styleUrls: [`client/modules/recent/recent.component.css`],
     templateUrl: `client/modules/recent/recent.component.html`
 })
-export class RecentComponent implements OnInit {
+export class RecentComponent implements OnInit, AfterViewInit {
 
     clarifai;
     modelID;
@@ -24,7 +24,13 @@ export class RecentComponent implements OnInit {
 
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
+
+    ngAfterViewInit(){
+        let aud = document.getElementById('audio');
+        // aud.play();
+    }
 
     addClarifai(){
         this.clarifai.inputs.create({

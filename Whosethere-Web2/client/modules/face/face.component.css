@@ -31,6 +31,12 @@
     margin-right: 500px;
 }
 
+#fileuip{
+    left: 33%;
+    top: 201px;
+    position: absolute;
+}
+
 
 .title-area > hr{
     border-bottom: 3px solid green;
@@ -44,4 +50,19 @@
 
 .ui.special.cards{
     padding-bottom: 20px;
+}
+
+#add-segment{
+    position: absolute;
+    text-align: center;
+    width: 30%;
+    left: 35%;
+    top: 250px;
+    height: 500px;
+    box-shadow: 10px 10px 5px -6px rgba(23,170,28,1) !important;
+}
+
+
+.add-container{
+
 }

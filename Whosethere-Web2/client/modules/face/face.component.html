@@ -4,11 +4,40 @@
     <div class="title-area">
         <h1>Your People</h1>
         <hr>
-        <button id="addButton" class="btn btn-success btn-log">Add</button>
-        <button class="btn btn-danger btn-log">Delete</button>
+        <button id="addButton" class="btn btn-success btn-log" (click)="AddButtonClicked()" >Add</button>
+        <button id="deleteButton"  class="btn btn-danger btn-log" (click)="DeleteButtonClicked()">Delete</button>
+        <button id="goBackButton" style="opacity:0;position:absolute;left: 25%;" class="btn btn-info btn-lg" (click)="GoBackButton()">Go Back</button>
     </div>
 
-    <div class="row">
+
+    <div id="add-container" style="opacity: 0">
+
+        <div id="add-segment" class="ui raised segment">
+
+
+
+            <img id="picture-holder" src="http://placehold.it/350x250"><br/>
+
+            <input id="fileuip" type="file" />
+
+            <div class="ui large buttons" style="margin-top: 20px;">
+                <button class="positive ui button">Friendly</button>
+                <div class="or"></div>
+                <button class="ui yellow button">Cautious</button>
+                <div class="or"></div>
+                <button class="negative ui button">Danger</button>
+            </div><br/>
+            <div class="ui input" style="width:100%;margin-top: 20px;">
+                <input type="text" placeholder="Name">
+            </div><br/>
+
+            <button class="ui positive basic button" style="margin-top: 20px;width:100%">Submit</button>
+
+        </div>
+
+    </div>
+
+    <div id="user-row" class="row">
         <div class="col-md-3">
         <div class="ui special cards">
             <div class="card">
