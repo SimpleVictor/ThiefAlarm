@@ -6,6 +6,7 @@ declare var TweenMax;
 declare var Bounce;
 declare var Circ;
 
+declare var firebase;
 
 @Component({
     styleUrls: [`client/modules/face/face.component.css`],
@@ -18,6 +19,8 @@ export class FaceComponent implements OnInit, AfterViewInit {
     addButton;
     deleteButton;
     goBackButton;
+
+    fileLink;
 
     constructor() {
 
@@ -45,7 +48,7 @@ export class FaceComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(){
 
         var inputElement = document.getElementById("fileuip");
-        function handleFiles() {
+        function handleFiles(){
             var fileList = this.files; /* now you can work with the file list */
             console.log(fileList);
             var reader = new FileReader();
@@ -58,6 +61,10 @@ export class FaceComponent implements OnInit, AfterViewInit {
             };
 
             reader.readAsDataURL(fileList[0]);
+            // var storageRef = firebase.storage().ref("test.jpg").put(fileList[0]).then(function(snapshot) {
+            //     console.log(snapshot);
+            //     console.log('Uploaded a blob or file!');
+            // });
         }
         inputElement.addEventListener("change", handleFiles, false);
 
@@ -65,6 +72,7 @@ export class FaceComponent implements OnInit, AfterViewInit {
 
 
     }
+
 
     AddButtonClicked(){
         console.log("checks");
@@ -92,6 +100,37 @@ export class FaceComponent implements OnInit, AfterViewInit {
     GoBackButton(){
         // TweenMax.to(this.addButton, 0.5, {scale: 1 , ease:Circ.easeOut});
         // TweenMax.to(this.deleteButton, 0.5, {scale: 1 , ease:Circ.easeOut});
+    }
+
+    FileSubmit(){
+        // console.log($('#picture-holder')[0].src);
+        this.TurnIntoBlob($('#picture-holder')[0].src);
+    }
+
+    TurnIntoBlob(dataURI){
+        // convert base64 to raw binary data held in a string
+        var byteString = atob(dataURI.split(',')[1]);
+
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+        // write the bytes of the string to an ArrayBuffer
+        var arrayBuffer = new ArrayBuffer(byteString.length);
+        var _ia = new Uint8Array(arrayBuffer);
+        for (var i = 0; i < byteString.length; i++) {
+            _ia[i] = byteString.charCodeAt(i);
+        }
+
+        var dataView = new DataView(arrayBuffer);
+        var blob = new Blob([dataView], { type: mimeString });
+        console.log(blob);
+
+        var storageRef = firebase.storage().ref("blmaskj.jpg").put(blob).then((snapshot) => {
+            console.log("Sucess!!");
+            this.fileLink = snapshot.downloadURL;
+            console.log('Uploaded a blob or file!');
+        });
+
     }
 
     readURL(input) {
