@@ -1,5 +1,6 @@
 import { NgModule, ModuleWithProviders } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import {BackEndServer} from "../../providers/server.provider";
 
 
 @NgModule({
@@ -13,7 +14,7 @@ export class SharedModule {
         return {
             ngModule: SharedModule,
             providers: [
-
+                BackEndServer
             ]
         };
     }

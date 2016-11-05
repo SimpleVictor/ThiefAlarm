@@ -1,0 +1,2 @@
+var CLIENT_ID = 'NzqlFXL4KYm0JU2peqvpgOIDviUlYSukztefjp4H';
+var CLIENT_SECRET = 'Tv4Wl1-UTSa2sUR2RLZXOpKKhOqRy-DE9oGvukJQ';

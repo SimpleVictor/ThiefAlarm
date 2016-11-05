@@ -4,9 +4,39 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <base href=".">
 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/semantic.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
+
+        <link href="https://fonts.googleapis.com/css?family=Chewy" rel="stylesheet">
+
+
+        <script src="bower_components/tracking.js/build/tracking.js"></script>
+        <script src="bower_components/tracking.js/build/data/face.js"></script>
+        <script src="bower_components/tracking.js/build/data/eye.js"></script>
+        <script src="bower_components/tracking.js/build/data/mouth.js"></script>
+        <script src="bower_components/dat-gui/build/dat.gui.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="assets/js/stats.min.js"></script>
+        <script src="assets/js/webcam.js"></script>
+        <!--<script src="assets/js/keys.js"></script>-->
+        <script type="text/javascript" src="https://sdk.clarifai.com/js/clarifai-2.0.9.js"></script>
+
+        <script>
+//            console.log(Clarifai);
+//    var app = new Clarifai.App(
+//        'NzqlFXL4KYm0JU2peqvpgOIDviUlYSukztefjp4H',
+//        'Tv4Wl1-UTSa2sUR2RLZXOpKKhOqRy-DE9oGvukJQ'
+//    );
+
+
+//            console.log(app);
+
+
+
+
+        </script>
         <!-- 1. Load libraries -->
         <!-- Polyfill(s) for older browsers -->
         <script src="assets/js/vendor/shim.min.js"></script>
@@ -30,6 +60,20 @@
                 <div class="ui small loader"></div>
             </div>
         </app>
+
+        <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyAsY5Wbs6F0BYKhM4TDrgZdRlB-2a_vSsw",
+                authDomain: "faceproject-ef088.firebaseapp.com",
+                databaseURL: "https://faceproject-ef088.firebaseio.com",
+                storageBucket: "faceproject-ef088.appspot.com",
+                messagingSenderId: "935639731823"
+            };
+            firebase.initializeApp(config);
+        </script>
+
         <!--  Production mod  -->
         <!--<script src="assets/js/bundle.min.js"></script>-->
     </body>
