@@ -39,9 +39,28 @@
     left: 9%;
     top: 7%;
 }
+
+
+#switches{
+    position: absolute;
+    height: 405px;
+    top: -2%;
+    width: 250px;
+    box-shadow: 10px 10px 5px -6px rgba(23,170,28,1) !important;
+    left: -55%;
+}
+
 #canvas{
     left: 9%;
     top: 7%;
+}
+
+#possible-guesses{
+    position: absolute;
+    top: -2%;
+    height: 392px;
+    left: 110%;
+    box-shadow: 10px 10px 5px -6px rgba(23,170,28,1) !important;
 }
 
 #saved_photos{

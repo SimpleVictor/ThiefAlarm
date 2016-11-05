@@ -17,33 +17,63 @@ declare var $;
 })
 export class HomeComponent implements AfterViewInit {
 
+    clarifai;
+    sixPictureURL = {
+        1: "",
+        2: "",
+        3:"",
+        4: "",
+        5: "",
+        6: ""
+    };
 
     constructor(private bServer: BackEndServer) {
-77
         console.log(firebase);
 
-        var clarifai = new Clarifai.App(
-            'W9bNEQDDpNqYj640R7KtnUeDyfVJSKun4lKJ4XDt',
-            'rLWIMBW997dv91HzHXfJ3wW01E7_kOfsn1FSizwR'
+        this.clarifai = new Clarifai.App(
+            'bTMzaZJMhkuBrrwqrtPceNg3c_vNMtMkE8CGHlOp',
+            'sqFkvLgm8CcFQ7OMYnPv2vwryzoHkkIpSSfwOHlF'
         );
 
+        // this.clarifai.inputs.list().then(
+        //     function(response) {
+        //         // do something with response
+        //         console.log("hjere");
+        //         console.log(response);
+        //     },
+        //     function(err) {
+        //         console.log(err);
+        //         // there was an error
+        //     }
+        // );
 
-        clarifai.inputs.search([
-            {
-                url: 'https://randomuser.me/api/portraits/men/34.jpg'
-            }
-        ]).then(
+        this.clarifai.inputs.delete('ea5df8dcde6a42678e1ebf8cc889714c').then(
             function(response) {
                 // do something with response
-                console.log(response);
+                console.log("good");
             },
             function(err) {
+                console.log("bruh");
                 // there was an error
-                console.log(err);
             }
         );
 
-        console.log(clarifai);
+
+        // this.clarifai.inputs.search([
+        //     {
+        //         url: 'https://randomuser.me/api/portraits/men/34.jpg'
+        //     }
+        // ]).then(
+        //     function(response) {
+        //         // do something with response
+        //         console.log(response);
+        //     },
+        //     function(err) {
+        //         // there was an error
+        //         console.log(err);
+        //     }
+        // );
+
 
         let obj = {
             dude: "fsdfsdf"
@@ -59,7 +89,6 @@ export class HomeComponent implements AfterViewInit {
         );
 
     }
-
 
     ngAfterViewInit(){
         // Webcam.set({
@@ -84,7 +113,7 @@ export class HomeComponent implements AfterViewInit {
                 event.data.forEach((rect) => {
                     if(counter < 7){
                         this.snapPicture(counter);
-                        console.log(counter++);
+                        counter++;
                     }
 
                     context.strokeStyle = '#a64ceb';
@@ -122,10 +151,41 @@ export class HomeComponent implements AfterViewInit {
             // console.log(encodeURIComponent(data_uri));
             // console.log(data_uri);
             // this.turnIntoBlob(data_uri);
-            console.log("Hey");
             $(`#img-place${val}`)[0].src = '';
             $(`#img-place${val}`)[0].src = data_uri;
+            this.sendDataToFirebase(val, data_uri);
+
         } );
+    }
+
+    sendDataToFirebase(val, dataURI){
+        let blob = this.blobFirebase(dataURI);
+        var storageRef = firebase.storage().ref(`checker${val}.jpg`).put(blob).then((snapshot) => {
+            // console.log(snapshot);
+            this.sixPictureURL[val] = snapshot.downloadURL;
+            console.log(`Uploaded a blob or file!: ${val}`);
+            if(val === 6){
+                this.SendToClarifai(this.sixPictureURL);
+            };
+        });
+
+    }
+
+    SendToClarifai(URLS){
+        this.clarifai.models.predict("ee247b52f2bb46a2bbdb0b60c8468d15", [URLS[1],URLS[2],URLS[3],URLS[4],URLS[5],URLS[6]]).then(
+            function(response) {
+                // do something with response
+                console.log("sucess!");
+                console.log(response);
+
+                response.data.outputs[0].data.concepts;
+
+            },
+            function(err) {
+                console.log(err);
+                // there was an error
+            }
+        );
     }
 
     turnIntoBlob(dataURI){
@@ -155,6 +215,26 @@ export class HomeComponent implements AfterViewInit {
 
 
     }
+
+    blobFirebase(dataURI){
+        // convert base64 to raw binary data held in a string
+        var byteString = atob(dataURI.split(',')[1]);
+
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+        // write the bytes of the string to an ArrayBuffer
+        var arrayBuffer = new ArrayBuffer(byteString.length);
+        var _ia = new Uint8Array(arrayBuffer);
+        for (var i = 0; i < byteString.length; i++) {
+            _ia[i] = byteString.charCodeAt(i);
+        }
+
+        var dataView = new DataView(arrayBuffer);
+        var blob = new Blob([dataView], { type: mimeString });
+        return blob;
+    }
+
 
 
 
