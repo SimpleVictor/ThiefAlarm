@@ -1,0 +1,321 @@
+@import url("//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css");
+.menu {
+    position: fixed;
+    top: 0;
+    box-shadow: 10px 10px 5px -6px rgba(23,170,28,1);
+    left: 0;
+    height: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background: #fff4f5;
+}
+.menu li a{
+    display:block;
+    width:5em;
+    font-size: 25px;
+    text-indent:-500em;
+    line-height:5em;
+    text-align:center;
+    color: #17AA1C;
+    background: #fff4f5;
+    position: relative;
+    border-bottom: 1px solid #ffe2e3;
+    transition: background 0.3s ease-in-out;
+}
+.menu li a:before {
+    font-family: FontAwesome;
+    speak: none;
+    text-indent: 0em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 1.4em;
+}
+.menu li a.search:before {
+    content: "\f002";
+}
+.menu li a.archive:before {
+    content: "\f187";
+}
+.menu li a.pencil:before {
+    content: "\f040";
+}
+.menu li a.contact:before {
+    content: "\f003";
+}
+.menu li a.about:before {
+    content: "\f007";
+}
+.menu li a.home:before {
+    content: "\f015";
+}
+.menu li a:hover{
+    background: #17AA1C;
+    color: #fff;
+}
+.menu li.current a {
+    background: #17AA1C;
+    color: #fff;
+}
+.menu li a.active {
+    background: #17AA1C;
+    color: #fff;
+}
+.menu li a.active:after{
+    position:absolute;
+    left:5em;
+    top:0;
+    content:"";
+    border:2.5em solid transparent;
+    border-left-color:#17AA1C;
+    border-width: 2.5em 1em
+}
+.menu li{
+    position:relative;
+}
+.menu li:after{
+    content: attr(title);
+    position:absolute;
+    left:5em;
+    top:0;
+    height:5em;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-transform:uppercase;
+    background:#17AA1C;
+    padding:2em;
+    transition: all 0.3s ease-in-out;
+    visibility:hidden;
+    opacity:0;
+}
+.menu li:hover:after{
+    visibility:visible;
+    opacity:1;
+}
+@media screen and (max-height: 34em){
+    .menu li{
+        font-size:70%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.logo-component{
+    position: absolute;
+}
+
+
+
+
+
+
+
+.camera-container{
+    left: 46%;
+    position: fixed;
+    top: 5%;
+}
+
+
+.camera-container .circle {
+    display: -webkit-flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 120%, #ddd, #fff 80%, #000 100%);
+    border-radius: 50%;
+    box-shadow: 8px 8px 15px #000;
+    height: 70px;
+    width: 70px;
+    perspective: 1000px;
+    perspective-origin: 50% 50%;
+    transform-style: preserve-3d;
+}
+.camera-container .circle .top {
+    background-repeat: no-repeat;
+    background-postion: center;
+    background-size: contain;
+    height: 45px;
+    width: 84px;
+    z-index: 2;
+    position: absolute;
+    top: -12px;
+    left: -7px;
+}
+.camera-container .circle .camera-eye {
+    -webkit-animation: camera 8s infinite linear;
+    -moz-animation: camera 8s infinite linear;
+    o-animation: camera 8s infinite linear;
+    animation: camera 8s infinite linear;
+    background: linear-gradient(45deg, #222, #444 30%, #444 35%, #222);
+    border-radius: 50%;
+    height: 42px;
+    margin: 10px 0 0 0;
+    width: 42px;
+    position: absolute;
+    left: 14px;
+    top: 14px;
+}
+.camera-container .circle .camera-eye .inner-eye {
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    background: radial-gradient(circle, #111 30%, rgba(255,255,255,0.7));
+    border-radius: 50%;
+    height: 42px;
+    width: 42px;
+}
+.camera-container .circle .camera-eye .inner-eye .blinking {
+    -webkit-animation: colour 2s infinite linear;
+    -moz-animation: colour 2s infinite linear;
+    o-animation: colour 2s infinite linear;
+    animation: colour 2s infinite linear;
+    border: 3px dotted #93d3ed;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+}
+
+@-moz-keyframes colour {
+    0% {
+        border: 3px dotted #93d3ed;
+    }
+    65% {
+        border: 3px dotted #93d3ed;
+    }
+    68% {
+        border: 3px dotted #f00;
+    }
+    75% {
+        border: 3px dotted #93d3ed;
+    }
+}
+@-webkit-keyframes colour {
+    0% {
+        border: 3px dotted #93d3ed;
+    }
+    65% {
+        border: 3px dotted #93d3ed;
+    }
+    68% {
+        border: 3px dotted #f00;
+    }
+    75% {
+        border: 3px dotted #93d3ed;
+    }
+}
+@-o-keyframes colour {
+    0% {
+        border: 3px dotted #93d3ed;
+    }
+    65% {
+        border: 3px dotted #93d3ed;
+    }
+    68% {
+        border: 3px dotted #f00;
+    }
+    75% {
+        border: 3px dotted #93d3ed;
+    }
+}
+@keyframes colour {
+    0% {
+        border: 3px dotted #93d3ed;
+    }
+    65% {
+        border: 3px dotted #93d3ed;
+    }
+    68% {
+        border: 3px dotted #f00;
+    }
+    75% {
+        border: 3px dotted #93d3ed;
+    }
+}
+@-moz-keyframes camera {
+    0% {
+        transform: none;
+    }
+    30% {
+        transform: translateX(-12px) translateY(5px) skewX(25deg) skewY(-3deg) scale(0.78);
+    }
+    65% {
+        transform: translateX(-12px) translateY(5px) skewX(25deg) skewY(-3deg) scale(0.78);
+    }
+    90% {
+        transform: none;
+    }
+}
+@-webkit-keyframes camera {
+    0% {
+        transform: none;
+    }
+    30% {
+        transform: translateX(-12px) translateY(5px) skewX(25deg) skewY(-3deg) scale(0.78);
+    }
+    65% {
+        transform: translateX(-12px) translateY(5px) skewX(25deg) skewY(-3deg) scale(0.78);
+    }
+    90% {
+        transform: none;
+    }
+}
+@-o-keyframes camera {
+    0% {
+        transform: none;
+    }
+    30% {
+        transform: translateX(-12px) translateY(5px) skewX(25deg) skewY(-3deg) scale(0.78);
+    }
+    65% {
+        transform: translateX(-12px) translateY(5px) skewX(25deg) skewY(-3deg) scale(0.78);
+    }
+    90% {
+        transform: none;
+    }
+}
+@keyframes camera {
+    0% {
+        transform: none;
+    }
+    30% {
+        transform: translateX(-12px) translateY(5px) skewX(25deg) skewY(-3deg) scale(0.78);
+    }
+    65% {
+        transform: translateX(-12px) translateY(5px) skewX(25deg) skewY(-3deg) scale(0.78);
+    }
+    90% {
+        transform: none;
+    }
+}
+
+
