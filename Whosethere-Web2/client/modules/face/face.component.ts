@@ -25,19 +25,83 @@ export class FaceComponent implements OnInit, AfterViewInit {
     constructor() {
 
         this.clarifai = new Clarifai.App(
-            'O9Vo-rlDAlz7CC7408pyrQjouB9_UEkXGth8TqjU',
-            'Mw8zRER2Xy9-3S5J3z1I1aJMELaHtff1PicplyZe'
+            'bTMzaZJMhkuBrrwqrtPceNg3c_vNMtMkE8CGHlOp',
+            'sqFkvLgm8CcFQ7OMYnPv2vwryzoHkkIpSSfwOHlF'
         );
     }
     ngOnInit() {
-        this.clarifai.inputs.list().then(
+        // this.clarifai.inputs.list().then(
+        //     function(response) {
+        //         console.log("sucess!");
+        //         console.log(response);
+        //         // do something with response
+        //     },
+        //     function(err) {
+        //         console.log("Failed");
+        //         console.log(err);
+        //         // there was an error
+        //     }
+        // );
+
+
+        this.clarifai.inputs.create([
+            {
+                url: "https://randomuser.me/api/portraits/men/53.jpg",
+                id: 'John Smith',
+                concepts: [
+                    {
+                        id: "John Smith",
+                        value: true
+                    }
+                ]
+            },
+            {
+                url: "https://randomuser.me/api/portraits/men/40.jpg",
+                id: 'Eric Hernandez',
+                concepts: [
+                    {
+                        id: "Eric Hernandez",
+                        value: true
+                    }
+                ]
+            },
+            {
+                url: "https://randomuser.me/api/portraits/men/95.jpg",
+                id: 'Jason Lai',
+                concepts: [
+                    {
+                        id: "Jason Lai",
+                        value: true
+                    }
+                ]
+            },
+            {
+                url: "https://randomuser.me/api/portraits/men/13.jpg",
+                id: 'Johnny Tran',
+                concepts: [
+                    {
+                        id: "Johnny Tran",
+                        value: true
+                    }
+                ]
+            },
+            {
+                url: "https://randomuser.me/api/portraits/men/70.jpg",
+                id: 'Henry Smith',
+                concepts: [
+                    {
+                        id: "Henry Smith",
+                        value: true
+                    }
+                ]
+            },
+        ]).then(
             function(response) {
-                console.log("sucess!");
-                console.log(response);
                 // do something with response
+                console.log("sucess1");
+                console.log(response);
             },
             function(err) {
-                console.log("Failed");
                 console.log(err);
                 // there was an error
             }

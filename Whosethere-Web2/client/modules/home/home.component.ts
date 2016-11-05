@@ -8,6 +8,7 @@ declare var dat;
 declare var Webcam;
 declare var Clarifai;
 declare var firebase;
+declare var $;
 
 @Component({
     selector: "home",
@@ -70,23 +71,30 @@ export class HomeComponent implements AfterViewInit {
         var canvas = document.getElementById('canvas');
         var context = canvas.getContext('2d');
         var tracker = new tracking.ObjectTracker(['face']);
-        // tracker.setInitialScale(4);
-        // tracker.setStepSize(2);
-        // tracker.setEdgesDensity(0.1);
+        tracker.setInitialScale(4);
+        tracker.setStepSize(2);
+        tracker.setEdgesDensity(0.1);
 
-        // tracking.track('#video', tracker, { camera: true });
+        tracking.track('#video', tracker, { camera: true });
 
-        // tracker.on('track', (event) => {
-        //     context.clearRect(0, 0, canvas.width, canvas.height);
-        //     event.data.forEach(function(rect) {
-        //         context.strokeStyle = '#a64ceb';
-        //         context.strokeRect(rect.x, rect.y, rect.width, rect.height);
-        //         context.font = '11px Helvetica';
-        //         context.fillStyle = "#fff";
-        //         context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
-        //         context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
-        //     });
-        // });
+        let counter = 1;
+
+        tracker.on('track', (event) => {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+                event.data.forEach((rect) => {
+                    if(counter < 7){
+                        this.snapPicture(counter);
+                        console.log(counter++);
+                    }
+
+                    context.strokeStyle = '#a64ceb';
+                    context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+                    context.font = '11px Helvetica';
+                    context.fillStyle = "#fff";
+                    context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
+                    context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
+                });
+        });
 
 
         // var trackerTask = tracking.track('#video', tracker);
@@ -109,13 +117,14 @@ export class HomeComponent implements AfterViewInit {
 
     }
 
-    snapPicture(){
-     console.log("test");
+    snapPicture(val){
         Webcam.snap( (data_uri) => {
             // console.log(encodeURIComponent(data_uri));
-            console.log(data_uri);
-            this.turnIntoBlob(data_uri);
-            document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
+            // console.log(data_uri);
+            // this.turnIntoBlob(data_uri);
+            console.log("Hey");
+            $(`#img-place${val}`)[0].src = '';
+            $(`#img-place${val}`)[0].src = data_uri;
         } );
     }
 

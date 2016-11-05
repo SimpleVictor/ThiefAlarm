@@ -3,7 +3,7 @@
 
     <!--<button (click)="snapPicture()" class="btn btn-info btn-lg" style="z-index: 5000; position: absolute;top:50%">Hey</button>-->
 
-    <div id="my_result"></div>
+    <!--<div id="my_result"></div>-->
 
 
     <div class="video-holder" style="width: 100%;">
@@ -16,12 +16,27 @@
 
 
 
+        <div id="video-segment" class="ui raised segment">
+
         <div class="demo-frame" style="height: 100%;width: 100%;">
             <div class="demo-container" style="height: 100%;width: 100%;">
-                <video id="video" width="320" height="240" preload autoplay loop muted></video>
-                <canvas id="canvas" width="320" height="240"></canvas>
+                <video id="video" width="448" height="336" preload autoplay loop muted></video>
+                <!--<video id="video" width="320 height="240"></video>-->
+                <canvas id="canvas" width="448" height="336"></canvas>
             </div>
         </div>
+
+            <div id="saved_photos" class="ui raised segment">
+                <img id="img-place1" class="img-place" src="http://placehold.it/200x150">
+                <img id="img-place2" class="img-place" src="http://placehold.it/200x150">
+                <img id="img-place3" class="img-place" src="http://placehold.it/200x150">
+                <img id="img-place4" class="img-place" src="http://placehold.it/200x150">
+                <img id="img-place5" class="img-place" src="http://placehold.it/200x150">
+                <img id="img-place6" class="img-place" src="http://placehold.it/200x150">
+            </div>
+
+
+    </div>
 
 
     </div>
